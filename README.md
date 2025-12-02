@@ -1,11 +1,10 @@
 # <a href="http://wpemerge.com"><img src="https://docs.wpemerge.com/_images/wpemerge-plugin-logo-bar.png" height="61" alt="WP Emerge Starter Plugin Logo" aria-label='WPEmerge.com' /></a>
 
-[![Packagist](https://img.shields.io/packagist/vpre/htmlburger/wpemerge-plugin.svg?style=flat-square&colorB=0366d6)](https://packagist.org/packages/htmlburger/wpemerge-plugin) [![Build](https://img.shields.io/github/workflow/status/htmlburger/wpemerge-plugin/Tests?style=flat-square)](https://github.com/htmlburger/wpemerge-plugin/actions/workflows/test.yml) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square&colorB=7d07d1)](https://gitter.im/wpemerge/Lobby)
+_This is a fork of [htmlburger/wpemerge-plugin](https://github.com/htmlburger/wpemerge-plugin)_
 
+A modern WordPress starter plugin which uses the [WP Emerge](https://github.com/collaborar/wpemerge) framework.
 
-A modern WordPress starter plugin which uses the [WP Emerge](https://github.com/htmlburger/wpemerge) framework.
-
-_This is the WP Emerge Starter Plugin project - for the WP Emerge framework please check out https://github.com/htmlburger/wpemerge._
+_This is the WP Emerge Starter Plugin project - for the WP Emerge framework please check out https://github.com/collaborar/wpemerge._
 
 ## Summary
 
@@ -23,10 +22,6 @@ _This is the WP Emerge Starter Plugin project - for the WP Emerge framework plea
 [http://docs.wpemerge.com/#/starter/plugin/overview](http://docs.wpemerge.com/#/starter/plugin/overview)
 
 [http://docs.wpemerge.com/#/starter/plugin/quickstart](http://docs.wpemerge.com/#/starter/plugin/quickstart)
-
-## Development Team
-
-Brought to you by [Atanas Angelov](https://atanas.dev/) and the lovely folks at [htmlBurger](http://htmlburger.com).
 
 ## Comparison Table
 
@@ -53,8 +48,6 @@ Brought to you by [Atanas Angelov](https://atanas.dev/) and the lovely folks at 
 _¹ There are prepared JavaScript files but they are not processed or transpiled in any way._
 
 _² The JavaScript files are only minified - no transpiling is done._
-
-_Email any factual inaccuracies to [hi@atanas.dev](mailto:hi@atanas.dev) so they can be corrected._
 
 ## Features
 - All features from [WP Emerge](https://docs.wpemerge.com/#/framework/overview):
@@ -107,11 +100,11 @@ _Email any factual inaccuracies to [hi@atanas.dev](mailto:hi@atanas.dev) so they
 
 ## Requirements
 
-- [PHP](http://php.net/) >= 5.5
-- [WordPress](https://wordpress.org/) >= 4.7
+- [PHP](http://php.net/) >= 8.1
+- [WordPress](https://wordpress.org/) >= 6.5
 - [Composer](https://getcomposer.org/)
-- [Node.js](https://nodejs.org/en/) >= 12
-- [Yarn](https://yarnpkg.com/en/) or NPM
+- [Node.js](https://nodejs.org/en/) >= 20
+- [PNPM](https://pnpm.io/), Yarn or NPM
 
 ## Directory structure
 
@@ -203,10 +196,9 @@ Avoid adding any PHP logic in any of these views, unless it pertains to layoutin
 WP Emerge Starter Plugin is completely open source and we encourage everybody to participate by:
 
 - Reviewing `.github/CONTRIBUTING.md`.
-- ⭐ the project on GitHub \([https://github.com/htmlburger/wpemerge-plugin](https://github.com/htmlburger/wpemerge-plugin)\)
-- Posting bug reports \([https://github.com/htmlburger/wpemerge-plugin/issues](https://github.com/htmlburger/wpemerge-plugin/issues)\)
-- (Emailing security issues to [hi@atanas.dev](mailto:hi@atanas.dev) instead)
-- Posting feature suggestions \([https://github.com/htmlburger/wpemerge-plugin/issues](https://github.com/htmlburger/wpemerge-plugin/issues)\)
-- Posting and/or answering questions \([https://github.com/htmlburger/wpemerge-plugin/issues](https://github.com/htmlburger/wpemerge-plugin/issues)\)
-- Submitting pull requests \([https://github.com/htmlburger/wpemerge-plugin/pulls](https://github.com/htmlburger/wpemerge-plugin/pulls)\)
+- ⭐ the project on GitHub \([https://github.com/collaborar/wpemerge](https://github.com/collaborar/wpemerge)\)
+- Posting bug reports \([https://github.com/collaborar/wpemerge/issues](https://github.com/collaborar/wpemerge/issues)\)
+- Posting feature suggestions \([https://github.com/collaborar/wpemerge/issues](https://github.com/collaborar/wpemerge/issues)\)
+- Posting and/or answering questions \([https://github.com/collaborar/wpemerge/issues](https://github.com/collaborar/wpemerge/issues)\)
+- Submitting pull requests \([https://github.com/collaborar/wpemerge/pulls](https://github.com/collaborar/wpemerge/pulls)\)
 - Sharing your excitement about WP Emerge with your community
