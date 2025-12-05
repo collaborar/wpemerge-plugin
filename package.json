@@ -1,37 +1,41 @@
 {
-  "name": "wpemerge-plugin",
-  "engines": {
-    "node": ">= 20"
-  },
-  "scripts": {
-    "start": "wp-scripts start",
-    "hot": "wp-scripts start --hot",
-    "build": "wp-scripts build",
-    "lint": "concurrently 'pnpm lint:scripts' 'pnpm lint:styles'",
-    "lint-fix": "wp-scripts format",
-    "lint:styles": "wp-scripts lint-style",
-    "lint:scripts": "wp-scripts lint-js",
-    "packages-update": "wp-scripts packages-update",
-    "release:zip": "wp-scripts plugin-zip"
-  },
-  "files": [
-    "app/",
-    "dist/",
-    "languages/",
-    "vendor/",
-    "views/",
-    "config.json",
-    "LICENSE",
-    "README.md",
-    "*.php"
-  ],
-  "devDependencies": {
-    "@types/node": "^24.10.1",
-    "@types/webpack-env": "^1.18.8",
-    "@wordpress/scripts": "^31.1.0",
-    "concurrently": "^9.2.1",
-    "svg-sprite-loader": "^6.0.11",
-    "webpack-manifest-plugin": "^6.0.1",
-    "webpack-merge": "^6.0.1"
-  }
+	"name": "wpemerge-plugin",
+	"engines": {
+		"node": ">= 20"
+	},
+	"scripts": {
+		"start": "wp-scripts start",
+		"hot": "wp-scripts start --hot",
+		"build": "wp-scripts build",
+		"lint": "concurrently 'pnpm lint:wpcs' 'pnpm lint:scripts' 'pnpm lint:styles' 'pnpm format'",
+		"lint-fix": "concurrently 'pnpm lint-fix:scripts' 'pnpm lint-fix:styles'",
+		"lint:scripts": "wp-scripts lint-js",
+		"lint:styles": "wp-scripts lint-style",
+		"lint-fix:scripts": "wp-scripts lint-js --fix",
+		"lint-fix:styles": "wp-scripts lint-style --fix",
+		"format": "wp-scripts format",
+		"packages-update": "wp-scripts packages-update",
+		"release:zip": "wp-scripts plugin-zip"
+	},
+	"files": [
+		"app/",
+		"dist/",
+		"languages/",
+		"vendor/",
+		"views/",
+		"config.json",
+		"LICENSE",
+		"README.md",
+		"*.php"
+	],
+	"devDependencies": {
+		"@types/node": "^24.10.1",
+		"@types/webpack-env": "^1.18.8",
+		"@wordpress/scripts": "^31.1.0",
+		"concurrently": "^9.2.1",
+		"eslint-import-resolver-alias": "^1.1.2",
+		"svg-sprite-loader": "^6.0.11",
+		"webpack-manifest-plugin": "^6.0.1",
+		"webpack-merge": "^6.0.1"
+	}
 }
