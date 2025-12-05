@@ -1,7 +1,7 @@
 # Build files
 /dist/
-/resources/styles/frontend/_sprite.scss
-/resources/styles/*.config.scss
+/build/
+/resources/styles/config.scss
 
 # Development files
 /config.json
@@ -14,6 +14,8 @@
 
 # NPM lockfile as it causes more problems than it solves
 package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
 # WordPress test environment
 /tests/environment

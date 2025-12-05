@@ -27,8 +27,7 @@
   },
   "require-dev": {
     "filp/whoops": "~2.13.0",
-    "collaborar/wpemerge-cli": "dev-master",
-    "symfony/debug": "~3.0",
+    "collaborar/wpemerge-cli": "0.17.0",
     "wp-coding-standards/wpcs": "^2.0",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0"
   },
