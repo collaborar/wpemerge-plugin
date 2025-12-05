@@ -2,11 +2,11 @@
     Settings
 \* ------------------------------------------------------------ */
 
-@import "~@styles/shared/variables";
-@import "./variables";
+@use "~@styles/shared/variables" as shared;
+@use "./variables";
 
 /* ------------------------------------------------------------ *\
-    Theme
+    Frontend
 \* ------------------------------------------------------------ */
 
-@import "./generic.fonts";
+@use "./generic.fonts";
