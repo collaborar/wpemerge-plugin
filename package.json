@@ -20,6 +20,7 @@
 		"i18n:json": "./vendor/bin/wp i18n make-json languages",
 		"format": "wp-scripts format",
 		"packages-update": "wp-scripts packages-update",
+		"rebrand": "rebrand",
 		"release:zip": "wp-scripts plugin-zip"
 	},
 	"dependencies": {},
@@ -27,6 +28,7 @@
 		"@types/node": "^24.10.1",
 		"@types/webpack-env": "^1.18.8",
 		"@wordpress/scripts": "^31.1.0",
+		"@wpemerge/rebrand": "workspace:*",
 		"concurrently": "^9.2.1",
 		"eslint-import-resolver-alias": "^1.1.2",
 		"svg-sprite-loader": "^6.0.11",
