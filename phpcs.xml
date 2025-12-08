@@ -2,6 +2,9 @@
 <ruleset name="MyApp">
 	<description>Plugin Coding Standard</description>
 
+	<arg name="extensions" value="php" />
+	<arg name="cache" value=".phpcscache" />
+
 	<exclude-pattern>app/src</exclude-pattern>
 	<exclude-pattern>dist</exclude-pattern>
 	<exclude-pattern>node_modules</exclude-pattern>
@@ -14,7 +17,7 @@
 	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
 
 	<rule ref="WordPress">
-		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax" />
 		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
 	</rule>
 
