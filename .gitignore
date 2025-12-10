@@ -34,8 +34,3 @@ Thumbs.db
 .idea
 studio.json
 .ignore/
-
-# Temporary ignored files
-packages
-composer.lock
-pnpm-workspace.yaml
