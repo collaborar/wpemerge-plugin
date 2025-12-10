@@ -1,52 +1,57 @@
 {
-  "name": "collaborar/wpemerge-plugin",
-  "version": "0.17.1",
-  "description": "A modern WordPress starter plugin which uses the WP Emerge framework",
-  "type": "wordpress-plugin",
-  "keywords": ["wordpress", "plugin", "starter plugin", "wpemerge"],
-  "license": "GPL-2.0-only",
-  "homepage": "https://wpemerge.com/",
-  "authors": [
-    {
-      "name": "Atanas Angelov",
-      "email": "hi@atanas.dev",
-      "homepage": "https://atanas.dev/",
-      "role": "Creator"
-    },
-    {
-      "name": "Paulo Ferreira",
-      "email": "paulo@collaborar.com",
-      "role": "Developer"
-    }
-  ],
-  "require": {
-    "php": ">=8.1",
-    "composer/installers": "^2.3",
-    "collaborar/wpemerge": "dev-master",
-    "collaborar/wpemerge-app-core": "dev-master"
-  },
-  "require-dev": {
-    "filp/whoops": "^2.18",
-    "collaborar/wpemerge-cli": "0.17.0",
-    "wp-coding-standards/wpcs": "^3.3",
-    "wp-cli/i18n-command": "^2.6"
-  },
-  "autoload": {
-    "psr-4": {
-      "MyApp\\": "app/src/"
-    }
-  },
-  "scripts": {
-    "install-dev-env": [
-      "@php wpemerge install:dependencies",
-      "@php wpemerge assets:build"
-    ],
-    "post-create-project-cmd": "@install-dev-env"
-  },
-  "config": {
-    "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true,
-      "composer/installers": true
-    }
-  }
+	"name": "collaborar/wpemerge-plugin",
+	"version": "0.17.1",
+	"description": "A modern WordPress starter plugin which uses the WP Emerge framework",
+	"type": "wordpress-plugin",
+	"keywords": [
+		"wordpress",
+		"plugin",
+		"starter plugin",
+		"wpemerge"
+	],
+	"license": "GPL-2.0-only",
+	"homepage": "https://wpemerge.com/",
+	"authors": [
+		{
+			"name": "Atanas Angelov",
+			"email": "hi@atanas.dev",
+			"homepage": "https://atanas.dev/",
+			"role": "Creator"
+		},
+		{
+			"name": "Paulo Ferreira",
+			"email": "paulo@collaborar.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=8.1",
+		"composer/installers": "^2.3",
+		"collaborar/wpemerge": "dev-master",
+		"collaborar/wpemerge-app-core": "dev-master"
+	},
+	"require-dev": {
+		"filp/whoops": "^2.18",
+		"collaborar/wpemerge-cli": "0.17.0",
+		"wp-coding-standards/wpcs": "^3.3",
+		"wp-cli/i18n-command": "^2.6"
+	},
+	"autoload": {
+		"psr-4": {
+			"MyApp\\": "app/src/"
+		}
+	},
+	"scripts": {
+		"install-dev-env": [
+			"@php wpemerge install:dependencies",
+			"@php wpemerge assets:build"
+		],
+		"post-create-project-cmd": "@install-dev-env"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"composer/installers": true
+		}
+	}
 }
