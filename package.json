@@ -20,10 +20,11 @@
 		"i18n:json": "./vendor/bin/wp i18n make-json languages",
 		"format": "wp-scripts format",
 		"packages-update": "wp-scripts packages-update",
-		"rebrand": "node resources/build/rebrand/rebrand.js",
+		"rebrand": "node resources/build/rebrand/index.js",
 		"release": "concurrently 'pnpm build' 'composer install --no-dev --classmap-authoritative' 'pnpm release:zip'",
 		"release:zip": "wp-scripts plugin-zip"
 	},
+	"dependencies": {},
 	"devDependencies": {
 		"@inquirer/prompts": "^8.0.2",
 		"@types/node": "^24.10.1",

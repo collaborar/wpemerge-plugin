@@ -1,48 +1,41 @@
 /**
- * External dependencies
+ * External dependencies.
  */
-const { basename, dirname } = require( 'path' );
+const path = require( 'path' );
 const { sync: glob } = require( 'fast-glob' );
 const {
 	hasProjectFile,
 	getProjectSourcePath,
-	getWebpackEntryPoints: getEntryPoints,
+	getWebpackEntryPoints: getEntryPoints
 } = require( '@wordpress/scripts/utils' );
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
-const { fromResoucesScriptRoot, getResourcesPath } = require( './file' );
+const { resourcesPath } = require('./file');
 
-/**
- * Detects the list of entry points to use with webpack.
- *
- * @param {'script' | 'module'} buildType
- */
 function getWebpackEntryPoints( buildType ) {
-	/**
-	 * @return {Object<string,string>} The list of entry points.
-	 */
 	return () => {
-		// 1. Use the `getWebpackEntryPoints` from wp-scripts to detect entry points.
-		const entryPoints = hasProjectFile( getProjectSourcePath() )
-			? getEntryPoints( buildType )()
-			: {};
+		// Detect block-json entry points from source path.
+		const entryPoints = ! hasProjectFile( getProjectSourcePath() )
+			? {}
+			: getEntryPoints( buildType )();
 
-		if ( hasProjectFile( getResourcesPath( 'scripts' ) ) ) {
-			// Detect any `{bundle}/index.*` file inside scripts folder.
-			const scripts = glob( '**/index.[jt]s?(x)', {
+		if ( hasProjectFile( 'resources/scripts' ) ) {
+			// Handle each folder inside `resources/scripts` as an
+			// entry for webpack.
+			//
+			// If you have a `shared` folder, it will be ignored.
+			const entries = glob( '**/index.[jt]s?(x)', {
 				absolute: true,
-				cwd: fromResoucesScriptRoot(),
 				ignore: [ 'shared/**' ],
+				cwd: resourcesPath( 'scripts' )
 			} );
 
-			if ( scripts.length > 0 ) {
-				for ( const filepath of scripts ) {
-					const entryName = basename( dirname( filepath ) );
-
-					entryPoints[ entryName ] = filepath;
-				}
+			for ( const entry of entries ) {
+				entryPoints[
+					path.basename( path.dirname( entry ) )
+				] = entry;
 			}
 		}
 
@@ -50,6 +43,4 @@ function getWebpackEntryPoints( buildType ) {
 	};
 }
 
-module.exports = {
-	getWebpackEntryPoints,
-};
+module.exports = { getWebpackEntryPoints };

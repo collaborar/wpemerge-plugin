@@ -1,17 +1,13 @@
-const {
-	fromResourcesRoot,
-	fromProjectRoot,
-	fromResoucesImagesRoot,
-	getResourcesPath,
-} = require( './file' );
+const { rootPath, resourcesPath } = require( './file' );
 
 const { getWebpackEntryPoints } = require( './config' );
 
-module.exports = {
-	fromProjectRoot,
-	fromResourcesRoot,
-	fromResoucesImagesRoot,
-	getResourcesPath,
+const { detectEnv, hasExperimentalModulesFlag } = require( './env' );
 
+module.exports = {
+	rootPath,
+	resourcesPath,
 	getWebpackEntryPoints,
+	detectEnv,
+	hasExperimentalModulesFlag,
 };

@@ -1,57 +1,54 @@
 /**
- * External dependencies
+ * External dependencies.
  */
-const webpack = require( 'webpack' );
-const { merge: mergeWebpackConfig } = require( 'webpack-merge' );
-const { getAsBooleanFromENV } = require( '@wordpress/scripts/utils' );
 const webpackConfig = require( '@wordpress/scripts/config/webpack.config' );
 const SvgSpriteLoaderPlugin = require( 'svg-sprite-loader/plugin' );
+const { merge: webpackMerge } = require( 'webpack-merge' );
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 const {
+	rootPath,
+	resourcesPath,
 	getWebpackEntryPoints,
-	fromProjectRoot,
-	fromResourcesRoot,
-	fromResoucesImagesRoot,
+	detectEnv,
+	hasExperimentalModulesFlag,
 } = require( './utils' );
 
-const hasExperimentalModulesFlag = getAsBooleanFromENV(
-	'WP_EXPERIMENTAL_MODULES'
-);
-const isProduction = process.env.NODE_ENV === 'production';
+const env = detectEnv();
 
-/** @type {webpack.Configuration} */
 const baseConfig = {
 	name: 'wpemerge',
 
 	output: {
-		path: fromProjectRoot( 'dist' ),
+		path: rootPath( 'dist' ),
 	},
 
 	resolve: {
 		alias: {
-			'@scripts': fromResourcesRoot( 'scripts' ),
-			'@styles': fromResourcesRoot( 'styles' ),
-			'@images': fromResourcesRoot( 'images' ),
-			'@fonts': fromResourcesRoot( 'fonts' ),
+			'@root': rootPath(),
+			'@scripts': resourcesPath( 'scripts' ),
+			'@styles': resourcesPath( 'styles' ),
+			'@images': resourcesPath( 'images' ),
 		},
 		extensions: [ '.css', '.scss' ],
 	},
 };
 
-/** @type {webpack.Configuration} */
-const config = {
+const wpemergeConfig = {
 	...baseConfig,
 
-	entry: getWebpackEntryPoints( 'script' ),
+	entry: getWebpackEntryPoints( 'scripts' ),
 
 	module: {
 		rules: [
+			/**
+			 * SVG Sprite.
+			 */
 			{
 				test: /\.svg$/,
-				include: fromResoucesImagesRoot( 'sprite-svg' ),
+				include: resourcesPath( 'images/sprite-svg' ),
 				use: [
 					{
 						loader: 'svg-sprite-loader',
@@ -65,24 +62,6 @@ const config = {
 		],
 	},
 
-	devServer: isProduction
-		? undefined
-		: {
-				devMiddleware: {
-					writeToDisk: true,
-				},
-				allowedHosts: 'auto',
-				host: 'localhost',
-				port: 8887,
-				proxy: {
-					'/dist': {
-						pathRewrite: {
-							'^/dist': '',
-						},
-					},
-				},
-		  },
-
 	plugins: [
 		new SvgSpriteLoaderPlugin( {
 			plainSprite: true,
@@ -93,18 +72,41 @@ const config = {
 			},
 		} ),
 	],
+
+	devServer: env.isProduction
+		? undefined
+		: {
+			devMiddleware: {
+				writeToDisk: true,
+			},
+			allowedHosts: 'auto',
+			host: 'localhost',
+			port: 8887,
+			proxy: {
+				'/dist': {
+					pathRewrite: {
+						'^/dist': '',
+					},
+				},
+			},
+		},
 };
 
 if ( hasExperimentalModulesFlag ) {
-	const [ wpScriptConfig, wpModuleConfig ] = webpackConfig;
-	const scriptConfig = mergeWebpackConfig( wpScriptConfig, config );
-	const moduleConfig = mergeWebpackConfig( wpModuleConfig, {
-		...baseConfig,
+	const [ __scriptConfig, __modulesConfig ] = webpackConfig;
+	const scriptConfig = webpackMerge(
+		__scriptConfig,
+		wpemergeConfig,
+	);
+	const modulesConfig = webpackMerge(
+		__modulesConfig,
+		{
+			...baseConfig,
+			entry: getWebpackEntryPoints( 'module' ),
+		},
+	);
 
-		entry: getWebpackEntryPoints( 'module' ),
-	} );
-
-	module.exports = [ scriptConfig, moduleConfig ];
+	module.exports = [ scriptConfig, modulesConfig ];
 } else {
-	module.exports = mergeWebpackConfig( webpackConfig, config );
+	module.exports = webpackMerge( webpackConfig, wpemergeConfig );
 }

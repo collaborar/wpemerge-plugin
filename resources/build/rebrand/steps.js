@@ -1,37 +1,38 @@
 /**
- * External dependencies
+ * External dependencies.
  */
 const path = require( 'path' );
-const colors = require( 'yoctocolors-cjs' );
 const shell = require( 'shelljs' );
+const { red, cyan, yellow } = require( 'yoctocolors-cjs' );
 const { input, confirm } = require( '@inquirer/prompts' );
 const { pascalCase, constantCase, snakeCase } = require( 'change-case' );
 const { replaceInFileSync: syncReplace } = require( 'replace-in-file' );
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
-const { fromProjectRoot } = require( '../utils' );
+const { rootPath } = require('../utils');
+
+const { log, error: logError } = console;
 
 /**
- * Require that the current working directory does not have unstaged changes or untracked files.
- *
- * @return {Promise}
+ * Require that the current working directory does not have
+ * unstaged changes or untracked files.
  */
 const requireCleanWorkingDirectory = () =>
 	new Promise( ( resolve, reject ) => {
-		const status = { code: 1 }; //shell.exec('git status --porcelain', { silent: true });
+		const status = shell.exec( 'git status --porcelain', { silent: true } );
 
 		if ( status.code !== 0 || status.stdout.trim().length === 0 ) {
 			resolve();
 			return;
 		}
 
-		const prologue = colors.red(
+		const prologue = red(
 			'This git repository has untracked files or uncommitted changes:'
 		);
-		const epilogue = colors.red(
-			'Remove untracked files, stash or commit any changes, and try again.'
+		const epilogue = red(
+			'Remove untracked files, stash or commit any changes, and try againl.'
 		);
 
 		reject(
@@ -40,12 +41,9 @@ const requireCleanWorkingDirectory = () =>
 	} );
 
 /**
- * Interactively ask the user for replacement tokens.
- *
- * @param  log
- * @return {Promise}
+ * Ask user for replacement tokens interactively.
  */
-const askForReplacementTokens = async ( log ) => {
+const askForReplacementTokens = async () => {
 	const name = await input( {
 		message: 'User-friendly project name (e.g. "My Awesome Project")',
 		validate: ( value ) =>
@@ -71,21 +69,13 @@ const askForReplacementTokens = async ( log ) => {
 	log( '' );
 	log( 'The following changes will be applied:' );
 	log( '--------------------------------------' );
-	log(
-		`WP Emerge Starter Theme/Plugin => ${ colors.cyan(
-			tokens[ 'WP Emerge Starter Plugin' ]
-		) }`
-	);
-	log( `MyApp => ${ colors.cyan( tokens.MyApp ) }` );
-	log( `MY_APP => ${ colors.cyan( tokens.MY_APP ) }` );
-	log( `my_app => ${ colors.cyan( tokens.my_app ) }` );
+	log( `WP Emerge Starter Theme/Plugin => ${ cyan( tokens[ 'WP Emerge Starter Plugin' ] ) }` );
+	log( `MyApp => ${ cyan( tokens.MyApp ) }` );
+	log( `MY_APP => ${ cyan( tokens.MY_APP ) }` );
+	log( `my_app => ${ cyan( tokens.my_app ) }` );
 	log( '--------------------------------------' );
 	log( '' );
-	log(
-		colors.yellow(
-			'WARNING: This is a one-time replacement only. Once applied it cannot be undone or updated automatically.'
-		)
-	);
+	log( yellow( 'WARNING: This is a one-time replacement only. Once applied it cannot be undone or updated automatically.' ) );
 
 	const proceed = await confirm( {
 		message: 'Are you sure you wish to proceed?',
@@ -101,18 +91,15 @@ const askForReplacementTokens = async ( log ) => {
 
 /**
  * Replace tokens in the given file globs.
- *
- * @param {Object}   tokens
- * @param {string[]} matchGlobs
- * @param {string[]} ignoreGlobs
- * @return {Promise}
  */
 const replaceTokens = ( tokens, matchGlobs, ignoreGlobs ) => {
-	const filesToRename = [ 'app/src/MyApp.php', 'languages/my_app.pot' ];
+	const filesToRename = [
+		'app/src/MyApp.php',
+		'languages/my_app.pot'
+	];
 
-	// Rename specific files that match tokens.
-	filesToRename.forEach( ( file ) => {
-		const from = fromProjectRoot( file );
+	for ( const file in filesToRename ) {
+		const from = rootPath( file );
 
 		if ( ! shell.test( '-e', from ) ) {
 			return;
@@ -126,23 +113,19 @@ const replaceTokens = ( tokens, matchGlobs, ignoreGlobs ) => {
 		if ( tokens[ name ] !== undefined && from !== to ) {
 			if ( ! shell.test( '-e', to ) ) {
 				shell.mv( from, to );
-			} else {
-				console.error(
-					colors.red(
-						`${ file } could not be renamed: ${ to } already exists.`
-					)
-				);
+				return;
 			}
-		}
-	} );
 
-	// Replace the tokens in the provided globs.
+			logError( red( `${ file } could not be renamed: ${ to } already exists.` ) );
+		}
+	}
+
 	Object.entries( tokens ).forEach( ( [ from, to ] ) => {
 		syncReplace( {
-			ignore: ignoreGlobs,
-			files: matchGlobs,
 			from: new RegExp( from, 'g' ),
 			to,
+			files: matchGlobs,
+			ignore: ignoreGlobs,
 		} );
 	} );
 
