@@ -3,6 +3,7 @@
  */
 const webpackConfig = require( '@wordpress/scripts/config/webpack.config' );
 const SvgSpriteLoaderPlugin = require( 'svg-sprite-loader/plugin' );
+const { WebpackManifestPlugin: ManifestPlugin } = require( 'webpack-manifest-plugin' );
 const { merge: webpackMerge } = require( 'webpack-merge' );
 
 /**
@@ -70,6 +71,11 @@ const wpemergeConfig = {
 				style: 'display: none; visibility: hidden',
 				id: '__WPEMERGE_SVG_SPRITE__',
 			},
+		} ),
+		new ManifestPlugin( {
+			writeToFileEmit: true,
+			// Keep manifest.json clean.
+			filter: ( file ) => /^(images|fonts)/.test( file.path ),
 		} ),
 	],
 
