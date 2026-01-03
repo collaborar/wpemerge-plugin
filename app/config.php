@@ -112,6 +112,7 @@ return [
 	'app_core'            => [
 		'path' => dirname( __DIR__ ),
 		'url'  => plugin_dir_url( MY_APP_PLUGIN_FILE ),
+		'textdomain' => trim( get_file_data( MY_APP_PLUGIN_FILE, [ 'Text Domain' ] )[0] )
 	],
 
 	/**

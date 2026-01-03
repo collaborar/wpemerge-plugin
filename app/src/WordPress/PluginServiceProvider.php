@@ -49,6 +49,12 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function loadTextdomain() {
-		load_plugin_textdomain( 'my_app', false, basename( dirname( MY_APP_PLUGIN_FILE ) ) . DIRECTORY_SEPARATOR . 'languages' );
+		[ $domain, $domain_path ] = get_file_data( MY_APP_PLUGIN_FILE, [ 'Text Domain', 'Domain Path' ] );
+		$path = join_paths(
+			basename( dirname( MY_APP_PLUGIN_FILE ) ),
+			trim( $domain_path )
+		);
+
+		load_plugin_textdomain( trim( $domain ), false, $path );
 	}
 }
