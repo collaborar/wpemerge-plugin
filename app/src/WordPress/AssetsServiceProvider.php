@@ -16,6 +16,13 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	protected $filesystem = null;
 
 	/**
+	 * App dist path.
+	 *
+	 * @var string
+	 */
+	protected $dist_path = '';
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
@@ -27,10 +34,15 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$this->filesystem = $container[ WPEMERGE_APPLICATION_FILESYSTEM_KEY ];
+		$this->dist_path = join_paths(
+			$container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'],
+			'dist'
+		);
 
 		add_action( 'wp_enqueue_scripts', [$this, 'enqueueFrontendAssets'] );
 		add_action( 'admin_enqueue_scripts', [$this, 'enqueueAdminAssets'] );
 		add_action( 'wp_footer', [$this, 'loadSvgSprite'] );
+		add_action( 'init', [$this, 'registerBlocks'] );
 	}
 
 	/**
@@ -46,18 +58,17 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 
 		// Enqueue scripts.
 		\MyApp::core()->assets()->enqueueScript(
-			'theme-js-bundle',
-			\MyApp::core()->assets()->getBundleUrl( 'frontend', '.js' ),
-			[ 'jquery' ],
-			true
+			handle: 'my-app-js-bundle',
+			src: \MyApp::core()->assets()->getBundleUrl( 'frontend.js' ),
+			args: [ 'in_footer' => true ]
 		);
 
 		// Enqueue styles.
-		$style = \MyApp::core()->assets()->getBundleUrl( 'frontend', '.css' );
+		$style = \MyApp::core()->assets()->getBundleUrl( 'frontend.css' );
 
 		if ( $style ) {
 			\MyApp::core()->assets()->enqueueStyle(
-				'theme-css-bundle',
+				'my-app-css-bundle',
 				$style
 			);
 		}
@@ -71,18 +82,17 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	public function enqueueAdminAssets() {
 		// Enqueue scripts.
 		\MyApp::core()->assets()->enqueueScript(
-			'theme-admin-js-bundle',
-			\MyApp::core()->assets()->getBundleUrl( 'admin', '.js' ),
-			[ 'jquery' ],
-			true
+			handle: 'my-app-admin-js-bundle',
+			src: \MyApp::core()->assets()->getBundleUrl( 'admin.js' ),
+			args: [ 'in_footer' => true ]
 		);
 
 		// Enqueue styles.
-		$style = \MyApp::core()->assets()->getBundleUrl( 'admin', '.css' );
+		$style = \MyApp::core()->assets()->getBundleUrl( 'admin.css' );
 
 		if ( $style ) {
 			\MyApp::core()->assets()->enqueueStyle(
-				'theme-admin-css-bundle',
+				'my-app-admin-css-bundle',
 				$style
 			);
 		}
@@ -94,22 +104,42 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function loadSvgSprite() {
-		$file_path = implode(
-			DIRECTORY_SEPARATOR,
-			array_filter(
-				[
-					get_template_directory(),
-					'dist',
-					'images',
-					'sprite.svg',
-				]
-			)
-		);
+		$file_path = join_paths( $this->dist_path, 'images', 'sprite.svg' );
 
 		if ( ! $this->filesystem->exists( $file_path ) ) {
 			return;
 		}
 
 		echo $this->filesystem->get_contents( $file_path );
+	}
+
+	/**
+	 * Register blocks.
+	 *
+	 * @return void
+	 */
+	public function registerBlocks() {
+		$blocks_path = join_paths( $this->dist_path, 'blocks' );
+		$blocks_manifest = join_paths( $this->dist_path, 'blocks-manifest.php' );
+
+		// Early avoid if no blocks exist.
+		if ( ! $this->filesystem->exists( $blocks_manifest ) ) {
+			return;
+		}
+
+		if ( function_exists( 'wp_register_block_types_from_metadata_collection' ) ) {
+			wp_register_block_types_from_metadata_collection( $blocks_path, $blocks_manifest );
+			return;
+		}
+
+		if ( function_exists( 'wp_register_block_metadata_collection' ) ) {
+			wp_register_block_metadata_collection( $blocks_path, $blocks_manifest );
+			return;
+		}
+
+		foreach ( array_keys( require $blocks_manifest ) as $block_type ) {
+			$block_type = join_paths( $this->path, 'dist', $block_type );
+			register_block_type( $block_type );
+		}
 	}
 }
