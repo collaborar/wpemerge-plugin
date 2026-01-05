@@ -36,7 +36,9 @@ jobs:
                   key: ${{ runner.os }}-${{ matrix.php-versions }}
 
             - name: Install dependencies
-              run: composer update --prefer-dist --no-progress
+              run: |
+                composer config --no-plugins allow-plugins.composer/installers [true]
+                composer update --prefer-dist --no-progress
 
             - name: Validate PHP syntax Part 1
               # The usage of bash + || exit 1 is to ensure xargs does not exit on first error.
