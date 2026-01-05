@@ -2,12 +2,12 @@
 
 WP Emerge Starter Plugin is completely open source and we encourage everybody to participate by:
 
-- ⭐ the project on GitHub \([https://github.com/htmlburger/wpemerge-plugin](https://github.com/htmlburger/wpemerge-plugin)\)
-- Posting bug reports \([https://github.com/htmlburger/wpemerge-plugin/issues](https://github.com/htmlburger/wpemerge-plugin/issues)\)
+- ⭐ the project on GitHub \([https://github.com/collaborar/wpemerge-plugin](https://github.com/collaborar/wpemerge-plugin)\)
+- Posting bug reports \([https://github.com/collaborar/wpemerge-plugin/issues](https://github.com/collaborar/wpemerge-plugin/issues)\)
 - (Emailing security issues to [hi@atanas.dev](mailto:hi@atanas.dev) instead)
-- Posting feature suggestions \([https://github.com/htmlburger/wpemerge-plugin/issues](https://github.com/htmlburger/wpemerge-plugin/issues)\)
-- Posting and/or answering questions \([https://github.com/htmlburger/wpemerge-plugin/issues](https://github.com/htmlburger/wpemerge-plugin/issues)\)
-- Submitting pull requests \([https://github.com/htmlburger/wpemerge-plugin/pulls](https://github.com/htmlburger/wpemerge-plugin/pulls)\)
+- Posting feature suggestions \([https://github.com/collaborar/wpemerge-plugin/issues](https://github.com/collaborar/wpemerge-plugin/issues)\)
+- Posting and/or answering questions \([https://github.com/collaborar/wpemerge-plugin/issues](https://github.com/collaborar/wpemerge-plugin/issues)\)
+- Submitting pull requests \([https://github.com/collaborar/wpemerge-plugin/pulls](https://github.com/collaborar/wpemerge-plugin/pulls)\)
 - Sharing your excitement about WP Emerge with your community
 
 ## Development setup
@@ -21,30 +21,30 @@ WP Emerge Starter Plugin is completely open source and we encourage everybody to
     "repositories": [
       {
         "type": "git",
-        "url": "https://github.com/htmlburger/wpemerge.git"
+        "url": "https://github.com/collaborar/wpemerge.git"
       },
       {
         "type": "git",
-        "url": "https://github.com/htmlburger/wpemerge-app-core.git"
+        "url": "https://github.com/collaborar/wpemerge-app-core.git"
       },
       {
         "type": "git",
-        "url": "https://github.com/htmlburger/wpemerge-cli.git"
+        "url": "https://github.com/collaborar/wpemerge-cli.git"
       }
     ],
     ```
     If you have forked any of the above repositories, feel free to replace the repository url where necessary.
-6. Continue editing the `composer.json` file and replace the versions of `htmlburger/wpemerge*` packages like so:
+6. Continue editing the `composer.json` file and replace the versions of `collaborar/wpemerge*` packages like so:
     ```json
-    "htmlburger/wpemerge": "~0.15.1",
-    "htmlburger/wpemerge-app-core": "~0.15.1",
-    "htmlburger/wpemerge-cli": "~0.15.1",
+    "collaborar/wpemerge": "~0.15.1",
+    "collaborar/wpemerge-app-core": "~0.15.1",
+    "collaborar/wpemerge-cli": "~0.15.1",
     ```
     should be edited to
     ```json
-    "htmlburger/wpemerge": "dev-master as 0.15.1",
-    "htmlburger/wpemerge-app-core": "dev-master as 0.15.1",
-    "htmlburger/wpemerge-cli": "dev-master as 0.15.1",
+    "collaborar/wpemerge": "dev-master as 0.15.1",
+    "collaborar/wpemerge-app-core": "dev-master as 0.15.1",
+    "collaborar/wpemerge-cli": "dev-master as 0.15.1",
     ```
     Do this for both `require` and `require-dev` packages.
 6. Run `composer install && composer run post-create-project-cmd`.
