@@ -12,13 +12,13 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php-versions: ['8.4', '8.3', '8.2']
+                php-versions: ['8.5', '8.4']
                 include:
-                    - php-versions: '8.1'
+                    - php-versions: '8.4'
                       build-assets: 1
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v6
 
             - name: Set up PHP
               uses: shivammathur/setup-php@v2
@@ -30,14 +30,14 @@ jobs:
 
             - name: Cache Composer packages
               id: composer-cache
-              uses: actions/cache@v3
+              uses: actions/cache@v5
               with:
                   path: vendor
                   key: ${{ runner.os }}-${{ matrix.php-versions }}
 
             - name: Install dependencies
               run: |
-                composer config --no-plugins allow-plugins.composer/installers [true]
+                composer config --no-plugins allow-plugins.composer/installers true
                 composer update --prefer-dist --no-progress
 
             - name: Validate PHP syntax Part 1
@@ -50,7 +50,7 @@ jobs:
 
             - name: Install Node.js
               if: ${{ matrix.build-assets }}
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v6
               with:
                   node-version: 20
 
