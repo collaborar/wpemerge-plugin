@@ -6,7 +6,7 @@ const eslintConfig = require( '@wordpress/scripts/config/.eslintrc.js' );
 /**
  * Internal dependencies
  */
-const { fromResourcesRoot } = require( './resources/build/utils' );
+const { resourcesPath } = require( './resources/build/utils' );
 
 module.exports = {
 	...eslintConfig,
@@ -17,10 +17,10 @@ module.exports = {
 		'import/resolver': {
 			alias: {
 				map: [
-					[ '@scripts', fromResourcesRoot( 'scripts' ) ],
-					[ '@styles', fromResourcesRoot( 'styles' ) ],
-					[ '@images', fromResourcesRoot( 'images' ) ],
-					[ '@fonts', fromResourcesRoot( 'fonts' ) ],
+					[ '@scripts', resourcesPath( 'scripts' ) ],
+					[ '@styles', resourcesPath( 'styles' ) ],
+					[ '@images', resourcesPath( 'images' ) ],
+					[ '@fonts', resourcesPath( 'fonts' ) ],
 				],
 				extensions: [ '.js', '.jsx', '.ts', '.tsx', '.scss' ],
 			},

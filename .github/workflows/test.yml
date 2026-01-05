@@ -37,9 +37,9 @@ jobs:
 
             - name: Install dependencies
               run: |
-                composer config --no-plugins allow-plugins.composer/installers true
-                composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-                composer update --prefer-dist --no-progress
+                  composer config --no-plugins allow-plugins.composer/installers true
+                  composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+                  composer update --prefer-dist --no-progress
 
             - name: Validate PHP syntax Part 1
               # The usage of bash + || exit 1 is to ensure xargs does not exit on first error.

@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-const { hasCssnanoConfig } = require( '@wordpress/scripts/utils' )
+const { hasCssnanoConfig } = require( '@wordpress/scripts/utils' );
 const postcssPlugins = require( '@wordpress/postcss-plugins-preset' );
 
 /**
@@ -31,8 +31,8 @@ if ( env.isProduction ) {
 					},
 				],
 			} ),
-		} ),
-	)
+		} )
+	);
 }
 
 module.exports = { plugins };
