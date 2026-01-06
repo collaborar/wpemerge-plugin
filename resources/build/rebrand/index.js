@@ -7,6 +7,7 @@ const { red } = require( 'yoctocolors-cjs' );
  * Internal dependencies.
  */
 const { rootPath } = require( '../utils' );
+const steps = require( './steps' );
 
 // Ignore these patterns when rebranding.
 const ignores = [

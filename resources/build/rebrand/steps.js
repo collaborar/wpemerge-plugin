@@ -98,7 +98,7 @@ const replaceTokens = ( tokens, matchGlobs, ignoreGlobs ) => {
 		'languages/my_app.pot'
 	];
 
-	for ( const file in filesToRename ) {
+	filesToRename.forEach(( file ) => {
 		const from = rootPath( file );
 
 		if ( ! shell.test( '-e', from ) ) {
@@ -118,7 +118,7 @@ const replaceTokens = ( tokens, matchGlobs, ignoreGlobs ) => {
 
 			logError( red( `${ file } could not be renamed: ${ to } already exists.` ) );
 		}
-	}
+	});
 
 	Object.entries( tokens ).forEach( ( [ from, to ] ) => {
 		syncReplace( {
