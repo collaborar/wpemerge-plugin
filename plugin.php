@@ -3,10 +3,10 @@
  * Plugin Name: WP Emerge Starter Plugin
  * Plugin URI: https://wpemerge.com/
  * Description:
- * Version: 0.17.0
+ * Version: 0.0.0
  * Requires at least: 6.5
- * Requires PHP: 8.1
- * Author: Paulo Ferreira
+ * Requires PHP: 8.4
+ * Author: Collaborar
  * Author URI: paulo@collaborar.com
  * License: GPL-2.0-only
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
