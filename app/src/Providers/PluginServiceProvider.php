@@ -1,6 +1,6 @@
 <?php
 
-namespace MyApp\WordPress;
+namespace MyApp\Providers;
 
 use WPEmerge\ServiceProviders\ServiceProviderInterface;
 
@@ -50,10 +50,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	 */
 	public function loadTextdomain() {
 		[ $domain, $domain_path ] = get_file_data( MY_APP_PLUGIN_FILE, [ 'Text Domain', 'Domain Path' ] );
-		$path = join_paths(
-			basename( dirname( MY_APP_PLUGIN_FILE ) ),
-			trim( $domain_path )
-		);
+		$path = basename( dirname( MY_APP_PLUGIN_FILE ) ) . DIRECTORY_SEPARATOR . trim( $domain_path );
 
 		load_plugin_textdomain( trim( $domain ), false, $path );
 	}

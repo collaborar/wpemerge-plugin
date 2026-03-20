@@ -1,6 +1,6 @@
 <?php
 
-namespace MyApp\WordPress;
+namespace MyApp\Providers;
 
 use WPEmerge\ServiceProviders\ServiceProviderInterface;
 

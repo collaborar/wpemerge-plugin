@@ -1,6 +1,6 @@
 <?php
 
-namespace MyApp\WordPress;
+namespace MyApp\Providers;
 
 use WPEmerge\ServiceProviders\ServiceProviderInterface;
 
@@ -34,10 +34,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$this->filesystem = $container[ WPEMERGE_APPLICATION_FILESYSTEM_KEY ];
-		$this->dist_path = join_paths(
-			$container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'],
-			'dist'
-		);
+		$this->dist_path = $container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] . DIRECTORY_SEPARATOR . 'dist';
 
 		add_action( 'wp_enqueue_scripts', [$this, 'enqueueFrontendAssets'] );
 		add_action( 'admin_enqueue_scripts', [$this, 'enqueueAdminAssets'] );
@@ -119,8 +116,8 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function registerBlocks() {
-		$blocks_path = join_paths( $this->dist_path, 'blocks' );
-		$blocks_manifest = join_paths( $this->dist_path, 'blocks-manifest.php' );
+		$blocks_path = $this->dist_path . DIRECTORY_SEPARATOR . 'blocks';
+		$blocks_manifest = $this->dist_path . DIRECTORY_SEPARATOR . 'blocks-manifest.php';
 
 		// Early avoid if no blocks exist.
 		if ( ! $this->filesystem->exists( $blocks_manifest ) ) {

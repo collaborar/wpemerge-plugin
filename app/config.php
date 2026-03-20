@@ -25,12 +25,12 @@ return [
 		\WPEmergeAppCore\Sidebar\SidebarServiceProvider::class,
 		\MyApp\Routing\RouteConditionsServiceProvider::class,
 		\MyApp\View\ViewServiceProvider::class,
-		\MyApp\WordPress\AdminServiceProvider::class,
-		\MyApp\WordPress\AssetsServiceProvider::class,
-		\MyApp\WordPress\ContentTypesServiceProvider::class,
-		\MyApp\WordPress\ShortcodesServiceProvider::class,
-		\MyApp\WordPress\PluginServiceProvider::class,
-		\MyApp\WordPress\WidgetsServiceProvider::class,
+		\MyApp\Providers\AdminServiceProvider::class,
+		\MyApp\Providers\AssetsServiceProvider::class,
+		\MyApp\Providers\ContentTypesServiceProvider::class,
+		\MyApp\Providers\ShortcodesServiceProvider::class,
+		\MyApp\Providers\PluginServiceProvider::class,
+		\MyApp\Providers\WidgetsServiceProvider::class,
 	],
 
 	/**

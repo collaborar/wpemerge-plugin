@@ -26,7 +26,7 @@
 	"require": {
 		"php": ">=8.4",
 		"composer/installers": "^2.3",
-		"collaborar/wpemerge": "^0.18.0",
+		"collaborar/wpemerge": "dev-master as 0.18.0",
 		"collaborar/wpemerge-app-core": "^0.18.0"
 	},
 	"require-dev": {
@@ -46,5 +46,11 @@
 			"@php wpemerge assets:build"
 		],
 		"post-create-project-cmd": "@install-dev-env"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	}
 }
