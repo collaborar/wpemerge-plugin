@@ -2,27 +2,35 @@
 
 namespace MyApp\Providers;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
 /**
  * Register plugin options.
  */
-class PluginServiceProvider implements ServiceProviderInterface {
+class PluginServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function register( $container ) {
-		// Nothing to register.
+	public function provides( string $id ): bool {
+		return false;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function bootstrap( $container ) {
+	public function boot(): void {
 		register_activation_hook( MY_APP_PLUGIN_FILE, [$this, 'activate'] );
 		register_deactivation_hook( MY_APP_PLUGIN_FILE, [$this, 'deactivate'] );
 
 		add_action( 'plugins_loaded', [$this, 'loadTextdomain'] );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function register(): void {
+		// Nothing to register.
 	}
 
 	/**

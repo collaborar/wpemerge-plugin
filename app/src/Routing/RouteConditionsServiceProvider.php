@@ -2,42 +2,40 @@
 
 namespace MyApp\Routing;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use League\Container\ServiceProvider\AbstractServiceProvider;
+use WPEmerge\Application\Configuration;
 
 /**
  * Provide custom route conditions.
  * This is an example class so feel free to modify or remove it.
  */
-class RouteConditionsServiceProvider implements ServiceProviderInterface {
+class RouteConditionsServiceProvider extends AbstractServiceProvider {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function register( $container ) {
+	public function provides( string $id ): bool {
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function register(): void {
 		// Example route condition registration.
-		// $this->registerRouteCondition( $container, 'my_condition', MyCondition::class );
+		// $this->registerRouteCondition( 'my_condition', MyCondition::class );
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	public function bootstrap( $container ) {
-		// Nothing to bootstrap.
-	}
-
-	/**
-	 * Register a class as a route condition
+	 * Register a class as a route condition.
 	 *
-	 * @param  \Pimple\Container $container
-	 * @param  string            $name
-	 * @param  string            $class_name
+	 * @param  string $name
+	 * @param  string $class_name
 	 * @return void
 	 */
-	protected function registerRouteCondition( $container, $name, $class_name ) {
-		$container[ WPEMERGE_ROUTING_CONDITION_TYPES_KEY ] = array_merge(
-			$container[ WPEMERGE_ROUTING_CONDITION_TYPES_KEY ],
-			[
-				$name => $class_name,
-			]
-		);
+	protected function registerRouteCondition( string $name, string $class_name ): void {
+		$config = $this->getContainer()->get( Configuration::class );
+		$types = $config->get( 'condition_types', [] );
+		$types[ $name ] = $class_name;
+		$config->set( 'condition_types', $types );
 	}
 }

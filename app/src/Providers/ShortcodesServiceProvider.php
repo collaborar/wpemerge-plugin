@@ -2,25 +2,33 @@
 
 namespace MyApp\Providers;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
 /**
  * Register shortcodes.
  */
-class ShortcodesServiceProvider implements ServiceProviderInterface {
+class ShortcodesServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function register( $container ) {
-		// Nothing to register.
+	public function provides( string $id ): bool {
+		return false;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function bootstrap( $container ) {
+	public function boot(): void {
 		// phpcs:ignore
 		// add_shortcode( 'example', [$this, 'shortcodeExample'] );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function register(): void {
+		// Nothing to register.
 	}
 
 	/**

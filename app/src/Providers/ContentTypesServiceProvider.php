@@ -2,25 +2,33 @@
 
 namespace MyApp\Providers;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
 /**
  * Register widgets and sidebars.
  */
-class ContentTypesServiceProvider implements ServiceProviderInterface {
+class ContentTypesServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function register( $container ) {
-		// Nothing to register.
+	public function provides( string $id ): bool {
+		return false;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function bootstrap( $container ) {
+	public function boot(): void {
 		add_action( 'init', [$this, 'registerPostTypes'] );
 		add_action( 'init', [$this, 'registerTaxonomies'] );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function register(): void {
+		// Nothing to register.
 	}
 
 	/**

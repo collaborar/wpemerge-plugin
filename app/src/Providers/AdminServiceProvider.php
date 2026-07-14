@@ -2,24 +2,32 @@
 
 namespace MyApp\Providers;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
 /**
  * Register admin-related entities, like admin menu pages.
  */
-class AdminServiceProvider implements ServiceProviderInterface {
+class AdminServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function register( $container ) {
-		// Nothing to register.
+	public function provides( string $id ): bool {
+		return false;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function bootstrap( $container ) {
+	public function boot(): void {
 		add_action( 'admin_menu', [$this, 'registerAdminPages'] );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function register(): void {
+		// Nothing to register.
 	}
 
 	/**
