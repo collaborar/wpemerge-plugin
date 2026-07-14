@@ -35,4 +35,4 @@ Thumbs.db
 studio.json
 .ignore/
 .phpcscache
-lib
+packages
