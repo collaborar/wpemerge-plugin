@@ -2,12 +2,14 @@
 
 namespace MyApp\Providers;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Container\ServiceProvider\BootableServiceProviderInterface;
+use WPEmerge\Application\Configuration;
 
 /**
  * Register and enqueues assets.
  */
-class AssetsServiceProvider implements ServiceProviderInterface {
+class AssetsServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface {
 	/**
 	 * Filesystem.
 	 *
@@ -25,21 +27,29 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function register( $container ) {
-		// Nothing to register.
+	public function provides( string $id ): bool {
+		return false;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function bootstrap( $container ) {
-		$this->filesystem = $container[ WPEMERGE_APPLICATION_FILESYSTEM_KEY ];
-		$this->dist_path = $container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] . DIRECTORY_SEPARATOR . 'dist';
+	public function boot(): void {
+		$container = $this->getContainer();
+		$this->filesystem = $container->get( \WP_Filesystem_Base::class );
+		$this->dist_path = $container->get( Configuration::class )->get( 'app_core.path', '' ) . DIRECTORY_SEPARATOR . 'dist';
 
 		add_action( 'wp_enqueue_scripts', [$this, 'enqueueFrontendAssets'] );
 		add_action( 'admin_enqueue_scripts', [$this, 'enqueueAdminAssets'] );
 		add_action( 'wp_footer', [$this, 'loadSvgSprite'] );
 		add_action( 'init', [$this, 'registerBlocks'] );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function register(): void {
+		// Nothing to register.
 	}
 
 	/**

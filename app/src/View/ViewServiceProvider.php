@@ -2,26 +2,34 @@
 
 namespace MyApp\View;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
 /**
  * Register view composers and globals.
  * This is an example class so feel free to modify or remove it.
  */
-class ViewServiceProvider implements ServiceProviderInterface {
+class ViewServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function register( $container ) {
-		// Nothing to register.
+	public function provides( string $id ): bool {
+		return false;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function bootstrap( $container ) {
+	public function boot(): void {
 		$this->registerGlobals();
 		$this->registerComposers();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function register(): void {
+		// Nothing to register.
 	}
 
 	/**
